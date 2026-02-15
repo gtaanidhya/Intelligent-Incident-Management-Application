@@ -1,14 +1,21 @@
 package com.gta.incident.entity;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
+@Document(collection = "incident_records")
 public class Incident {
+    @Id
     private String number;
     private String title;
     private String description;
     private String source;
     private String opened_by;
-    private Date created;
+
+    private LocalDateTime created;
     private String logs;
 
     public String getNumber() {
@@ -35,11 +42,11 @@ public class Incident {
         this.logs = logs;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

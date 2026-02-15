@@ -1,37 +1,36 @@
 package com.gta.incident.service;
 
 import com.gta.incident.entity.Incident;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import com.gta.incident.repository.IncidentRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-@Service
+@Component
 public class IncidentService {
-    private Map<String, Incident> incidents = new HashMap<>();
+
+    @Autowired
+    private IncidentRepository incidentRepository;
 
     public List<Incident> getAllIncidents(){
-        return new ArrayList<>(incidents.values());
+        return incidentRepository.findAll();
     }
 
-    public boolean createIncident(Incident incidentRecord){
-        incidents.put(incidentRecord.getNumber(),incidentRecord);
-        return true;
+    public void createIncident(Incident incidentRecord){
+        incidentRepository.save(incidentRecord);
     }
 
-    public Incident getIncidentByNumber(String incidentNumber){
-        return incidents.get(incidentNumber);
+    public Optional<Incident> getIncidentByNumber(String incidentNumber){
+        return incidentRepository.findById(incidentNumber);
     }
 
-    public Incident deleteIncidentByNumber(String incidentNumber){
-        return incidents.remove(incidentNumber);
+    public void deleteIncidentByNumber(String incidentNumber){
+        incidentRepository.deleteById(incidentNumber);
     }
 
-    public Incident updateIncident(String incidentNumber, Incident incidentRecord){
-        incidents.put(incidentNumber, incidentRecord);
-        return incidentRecord;
-    }
+//    public Incident updateIncident(String incidentNumber, Incident incidentRecord){
+//        incidents.put(incidentNumber, incidentRecord);
+//        return incidentRecord;
+//    }
 }
