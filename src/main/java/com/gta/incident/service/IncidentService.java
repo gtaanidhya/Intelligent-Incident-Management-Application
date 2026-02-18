@@ -8,6 +8,7 @@ import com.gta.incident.entity.Priority;
 import com.gta.incident.repository.IncidentRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,8 @@ public class IncidentService {
 
     @Autowired
     private IncidentRepository incidentRepository;
+    @Autowired
+    private SequenceGeneratorService sequenceGeneratorService;
 
     public List<Incident> getAllIncidents(){
         return incidentRepository.findAll();
@@ -94,10 +97,11 @@ public class IncidentService {
         }
     }
 
-    private String generateINCnumber(){
-        long existingNumber = incidentRepository.count();
-        long nextNumber = existingNumber + 1;
-        return String.format("INC%05d", nextNumber);
+    private String generateINCnumber() {
+        long seq = sequenceGeneratorService.generateSequence("incident_sequence");
+        return String.format("INC%05d", seq);
     }
+
+
 
 }
