@@ -1,12 +1,14 @@
 package com.gta.incident.controller;
 
+import com.gta.incident.dto.StatusPriority;
+import com.gta.incident.dto.IncidentDetails;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.gta.incident.entity.Incident;
 import com.gta.incident.service.IncidentService;
 
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -23,15 +25,13 @@ public class IncidentController {
     }
 
     @PostMapping
-    public Incident postIncident(@RequestBody Incident incidentRecord){
-        incidentRecord.setCreated(LocalDateTime.now());
-        incidentService.createIncident(incidentRecord);
-        return incidentRecord;
+    public Incident postIncident(@Valid @RequestBody IncidentDetails incidentDetails){
+        return incidentService.createIncident(incidentDetails);
     }
 
     @GetMapping("/number/{incidentNumber}")
     public Incident getIncidentByNumber(@PathVariable String incidentNumber){
-        return incidentService.getIncidentByNumber(incidentNumber).orElse(null);
+        return incidentService.getIncidentByNumber(incidentNumber);
     }
 
     @DeleteMapping("/number/{incidentNumber}")
@@ -40,11 +40,11 @@ public class IncidentController {
         return true;
     }
 
-    @PutMapping("/number/{incidentNumber}")
-    public Incident updateIncident(@PathVariable String incidentNumber, @RequestBody Incident incidentRecord){
-//        return incidentService.updateIncident(incidentNumber,incidentRecord);
-        incidentService.createIncident(incidentRecord);
-        return incidentRecord;
+    @PatchMapping("/number/{incidentNumber}")
+    public Incident updatePriorityStatus(@PathVariable String incidentNumber, @RequestBody StatusPriority statusPriority){
+        return incidentService.updateIncidentState(incidentNumber,statusPriority);
     }
+
+
 
 }

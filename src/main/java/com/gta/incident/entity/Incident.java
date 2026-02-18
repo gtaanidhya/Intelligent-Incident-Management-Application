@@ -14,9 +14,54 @@ public class Incident {
     private String description;
     private String source;
     private String opened_by;
-
+    private String category;
+    private Priority priority;
+    private IncidentStatus status;
     private LocalDateTime created;
-    private String logs;
+    private LocalDateTime updated;
+
+    public LocalDateTime getResolution_time() {
+        return resolution_time;
+    }
+
+    public void setResolution_time(LocalDateTime resolution_time) {
+        this.resolution_time = resolution_time;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
+
+    public IncidentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(IncidentStatus status) {
+        this.status = status;
+    }
+
+    public Priority getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Priority priority) {
+        this.priority = priority;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private LocalDateTime resolution_time;
+
 
     public String getNumber() {
         return number;
@@ -34,19 +79,12 @@ public class Incident {
         this.title = title;
     }
 
-    public String getLogs() {
-        return logs;
-    }
-
-    public void setLogs(String logs) {
-        this.logs = logs;
-    }
-
     public LocalDateTime getCreated() {
         return created;
     }
 
     public void setCreated(LocalDateTime created) {
+
         this.created = created;
     }
 
